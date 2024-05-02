@@ -1,15 +1,47 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/libs/prisma";
 
-export function GET() {
-    return NextResponse.json({
-        message: 'Get all tasks'
-    })
+export async function GET() {
+    try {
+        const tasks = await prisma.task.findMany()
+        return NextResponse.json(tasks)
+    } catch (error) {
+        if (error instanceof Error) {
+            return NextResponse.json(
+                {
+                    message: error.message,
+                },
+                {
+                    status: 500,
+                }
+            );
+        }
+    }
 }
 
-//Todo: get tasks for specific user
+export async function POST(request: Request) {
+    try {
+        const { name, description, dueDate, userId } = await request.json()
+        const newTask = await prisma.task.create({
+            data: {
+                name,
+                description,
+                dueDate: new Date(dueDate),
+                userId
+            }
+        })
 
-export function POST() {
-    return NextResponse.json({
-        message: 'Post task'
-    })
+        return NextResponse.json(newTask);
+    } catch (error) {
+        if (error instanceof Error) {
+            return NextResponse.json(
+                {
+                    message: error.message,
+                },
+                {
+                    status: 500,
+                }
+            );
+        }
+    }
 }
