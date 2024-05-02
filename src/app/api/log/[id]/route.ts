@@ -1,15 +1,20 @@
+
 import { NextResponse } from "next/server";
 
 export function GET() {
     return NextResponse.json({
-        message: 'Get all logs'
+        message: 'Get single log'
     })
 }
 
-//Todo: get logs for specific user
-
-export function POST() {
+export function DELETE() {
     return NextResponse.json({
-        message: 'Post logs'
+        message: 'Delete single log'
+    })
+}
+
+export function PUT() {
+    return NextResponse.json({
+        message: 'Update single log'
     })
 }
