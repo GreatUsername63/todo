@@ -4,7 +4,10 @@ import { useState } from "react";
 
 async function getTasks() {
     const res = await fetch(process.env.URL + '/api/task', {
-        method: 'GET'
+        method: 'GET',
+        next: {
+            revalidate: 0
+        }
     })
     return res.json();
 }
