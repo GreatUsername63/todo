@@ -1,7 +1,17 @@
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useState } from "react";
 
-export default function TaskTable() {
+async function getTasks() {
+    const res = await fetch(process.env.URL + '/api/task', {
+        method: 'GET'
+    })
+    return res.json();
+}
+
+export default async function TaskTable() {
+    const tasks = await getTasks()
+
     return (
         <div className="overflow-x-auto">
             <table className="table">
@@ -18,28 +28,31 @@ export default function TaskTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* row 1 */}
-                    <tr>
-                        <th>1</th>
-                        <td>Task name</td>
-                        <td>Quality Control Specialist</td>
-                        <td>11/05/24</td>
-                        <td>
-                            <label>
-                                <input type="checkbox" className="checkbox" />
-                            </label>
-                        </td>
-                        <td>
-                            <button className="btn">
-                                <FaEdit />
-                            </button>
-                        </td>
-                        <td>
-                            <button className="btn">
-                                <MdDelete />
-                            </button>
-                        </td>
-                    </tr>
+                    {tasks.map((task: any) => {
+                        return (
+                            <tr>
+                                <th>{task.id}</th>
+                                <td>{task.name}</td>
+                                <td>{task.description}</td>
+                                <td>{task.dueDate}</td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" className="checkbox" defaultChecked={task.complete} />
+                                    </label>
+                                </td>
+                                <td>
+                                    <button className="btn">
+                                        <FaEdit />
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className="btn">
+                                        <MdDelete />
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </div>
