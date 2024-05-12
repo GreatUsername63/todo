@@ -59,7 +59,7 @@ export async function DELETE(request: Request, { params }: Params) {
 
 export async function PUT(request: Request, { params }: Params) {
     try{
-        const { name, description, dueDate, userId } = await request.json()
+        const { name, description, dueDate, userId, complete } = await request.json()
 
         const task = await prisma.task.update({
             where: {
@@ -69,7 +69,8 @@ export async function PUT(request: Request, { params }: Params) {
                 name,
                 description,
                 dueDate: new Date(dueDate),
-                userId
+                userId,
+                complete
             }
         });
 
