@@ -2,6 +2,7 @@
 
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import DeleteModal from "./DeleteModal"
 
 export default function Home(props: any) {
 
@@ -35,9 +36,10 @@ export default function Home(props: any) {
                 </button>
             </td>
             <td>
-                <button className="btn">
+                <button className="btn" onClick={() => document.getElementById('delete_modal_' + props.data.id).showModal()}>
                     <MdDelete />
                 </button>
+                <DeleteModal data={props.data} />
             </td>
         </tr>
     )
