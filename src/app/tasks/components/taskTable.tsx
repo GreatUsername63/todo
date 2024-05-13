@@ -1,6 +1,4 @@
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { useState } from "react";
+import TaskColumn from "./TaskColumn";
 
 async function getTasks() {
     const res = await fetch(process.env.URL + '/api/task', {
@@ -9,6 +7,7 @@ async function getTasks() {
             revalidate: 0
         }
     })
+    console.log(res.json)
     return res.json();
 }
 
@@ -33,27 +32,7 @@ export default async function TaskTable() {
                 <tbody>
                     {tasks.map((task: any) => {
                         return (
-                            <tr>
-                                <th>{task.id}</th>
-                                <td>{task.name}</td>
-                                <td>{task.description}</td>
-                                <td>{task.dueDate}</td>
-                                <td>
-                                    <label>
-                                        <input type="checkbox" className="checkbox" defaultChecked={task.complete} />
-                                    </label>
-                                </td>
-                                <td>
-                                    <button className="btn">
-                                        <FaEdit />
-                                    </button>
-                                </td>
-                                <td>
-                                    <button className="btn">
-                                        <MdDelete />
-                                    </button>
-                                </td>
-                            </tr>
+                            <TaskColumn data={task} />
                         )
                     })}
                 </tbody>
