@@ -14,7 +14,7 @@ export async function GET(request: Request, { params }: Params) {
         });
 
         if (!user)
-            return NextResponse.json({message: "User not found" }, {status: 404});
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
 
         return NextResponse.json(user)
     } catch (error) {
@@ -40,7 +40,7 @@ export async function DELETE(request: Request, { params }: Params) {
         });
 
         if (!user)
-            return NextResponse.json({message: "User not found" }, {status: 404});
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
 
         return NextResponse.json(user)
     } catch (error) {
@@ -58,20 +58,21 @@ export async function DELETE(request: Request, { params }: Params) {
 }
 
 export async function PUT(request: Request, { params }: Params) {
-    try{
-        const { name } = await request.json();
+    try {
+        const { name, password } = await request.json();
 
         const user = await prisma.user.update({
             where: {
                 id: Number(params.id),
             },
             data: {
-                name
+                name,
+                password
             }
         });
 
         if (!user)
-            return NextResponse.json({message: "User not found" }, {status: 404});
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
 
         return NextResponse.json(user)
     } catch (error) {
