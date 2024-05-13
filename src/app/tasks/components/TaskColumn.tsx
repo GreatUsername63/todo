@@ -31,9 +31,12 @@ export default function Home(props: any) {
                 </label>
             </td>
             <td>
-                <button className="btn">
-                    <FaEdit />
-                </button>
+                <a href={process.env.URL + "/tasks/edit?id=" + props.data.id}>
+                    <button className="btn">
+
+                        <FaEdit />
+                    </button>
+                </a>
             </td>
             <td>
                 <button className="btn" onClick={() => document.getElementById('delete_modal_' + props.data.id).showModal()}>
